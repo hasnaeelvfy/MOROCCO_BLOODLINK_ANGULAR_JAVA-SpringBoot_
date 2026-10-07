@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DonorDashboardDto } from '../../core/api/api.models';
@@ -13,12 +14,12 @@ import { ToastService } from '../../ui/toast.service';
   template: `
     <section class="hp-page">
       <p class="hp-kicker">{{ 'donor.dashboard.title' | t }}</p>
-      <h1>{{ i18n.t('greeting.good', { part: i18n.greetingPart(), name: firstName() }) }}</h1>
+      <h1>{{ greetingLine() }}</h1>
       <p class="hp-lead">{{ 'donor.dashboard.lead' | t }}</p>
       @if (loading()) {
         <p class="hp-note">{{ 'common.loadingDashboard' | t }}</p>
-      } @else if (error()) {
-        <p class="hp-empty">{{ error() }}</p>
+      } @else if (loadError()) {
+        <p class="hp-empty">{{ errorText() }}</p>
       } @else {
         <div class="hp-toolbar">
           <button class="hp-btn" type="button" (click)="toggleAvailability()">
@@ -113,14 +114,29 @@ export class DonorPageComponent {
   readonly i18n = inject(I18nService);
   readonly dashboard = signal<DonorDashboardDto | null>(null);
   readonly loading = signal(true);
-  readonly error = signal('');
+  readonly loadError = signal<HttpErrorResponse | null>(null);
 
   constructor() {
     this.reload();
   }
 
+  greetingLine(): string {
+    this.i18n.locale();
+    const name = (this.dashboard()?.profile.firstName ?? '').trim();
+    const part = this.i18n.greetingPart();
+    return name
+      ? this.i18n.t('greeting.good', { part, name })
+      : this.i18n.t('greeting.goodPlain', { part });
+  }
+
+  errorText(): string {
+    this.i18n.locale();
+    const error = this.loadError();
+    return error ? httpErrorMessage(error) : '';
+  }
+
   firstName(): string {
-    return this.dashboard()?.profile.firstName || this.i18n.t('greeting.fallbackName');
+    return (this.dashboard()?.profile.firstName ?? '').trim();
   }
 
   eligibilityLabel(): string {
@@ -147,11 +163,11 @@ export class DonorPageComponent {
     this.api.dashboard().subscribe({
       next: (dashboard) => {
         this.dashboard.set(dashboard);
+        this.loadError.set(null);
         this.loading.set(false);
-        this.error.set('');
       },
-      error: (error) => {
-        this.error.set(httpErrorMessage(error));
+      error: (error: HttpErrorResponse) => {
+        this.loadError.set(error);
         this.loading.set(false);
       }
     });

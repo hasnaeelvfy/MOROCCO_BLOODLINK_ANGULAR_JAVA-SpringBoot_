@@ -3,7 +3,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
 import { API_BASE_URL } from '../api.config';
 import { AuthResponse, CurrentUserResponse, DonorRegisterRequest, HospitalRegisterRequest, LoginRequest } from './auth.models';
-import { AppLocale, parseStoredLocale } from '../../i18n/locale';
+import { AppLocale } from '../../i18n/locale';
 import { I18nService } from '../../i18n/i18n.service';
 
 const TOKEN_KEY = 'bloodlink.accessToken';
@@ -63,9 +63,6 @@ export class AuthService {
     return this.http.get<CurrentUserResponse>(`${AUTH_PREFIX}/me`).pipe(
       tap((user) => {
         this.currentUser.set(user);
-        if (user.locale) {
-          this.i18n.set(parseStoredLocale(user.locale) as AppLocale);
-        }
       })
     );
   }
@@ -157,7 +154,9 @@ export class AuthService {
       return throwError(() => new Error('Missing access token'));
     }
     this.persistToken(response.accessToken);
-    return this.loadCurrentUser();
+    return this.loadCurrentUser().pipe(
+      tap(() => this.persistLocale(this.i18n.locale()))
+    );
   }
 
   private persistToken(accessToken: string): void {

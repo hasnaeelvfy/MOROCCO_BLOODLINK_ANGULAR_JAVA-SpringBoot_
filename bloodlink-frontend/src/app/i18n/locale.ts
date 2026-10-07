@@ -33,3 +33,12 @@ export function parseStoredLocale(value: string | null | undefined): AppLocale {
   if (raw === 'en') return 'en';
   return DEFAULT_LOCALE;
 }
+
+export function hasExplicitStoredLocale(): boolean {
+  try {
+    const raw = localStorage.getItem(LOCALE_STORAGE_KEY);
+    return raw !== null && raw.trim() !== '';
+  } catch {
+    return false;
+  }
+}
