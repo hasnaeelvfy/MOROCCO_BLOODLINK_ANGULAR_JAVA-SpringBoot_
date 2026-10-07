@@ -1,0 +1,36 @@
+<section class="band" id="network">
+  <div class="section">
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow">{{ 'network.eyebrow' | t }}</p>
+        <h2>{{ 'network.headline' | t }}<br />{{ 'network.headlineTo' | t }} <span class="accent">{{ 'network.headlineAccent' | t }}</span></h2>
+      </div>
+      <p class="lead">
+        {{ 'network.lead' | t }}
+      </p>
+    </div>
+
+    <div class="network-layout">
+      <div class="glass network-card reveal" id="coverage">
+        <span class="demo-pill">{{ 'network.live' | t }}</span>
+        <div class="network-flow">
+          @for (stage of flowStages; track stage.label) {
+            <div class="flow-node">
+              <strong>{{ stage.label | t }}</strong>
+              <small>{{ stage.meta | t }}</small>
+            </div>
+          }
+        </div>
+        <div class="types">
+          @for (group of bloodGroups; track group) {
+            <span class="type">{{ group }}</span>
+          }
+        </div>
+        <div class="coverage-band">
+          <span class="demo-pill">{{ 'network.coverage' | t }}</span>
+          <p class="muted map-note">{{ 'network.noteLayer' | t }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

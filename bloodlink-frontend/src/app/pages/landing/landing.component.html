@@ -1,0 +1,19 @@
+@if (showIntro()) {
+  <app-intro (completed)="onIntroDone()" />
+}
+
+<div class="shell shell--revealed" [class.shell--has-ticker]="publicApi.hasActive()">
+  <app-urgent-ticker />
+  <app-site-nav />
+
+  <main id="top" class="shell__body">
+    <app-hero />
+    <app-network />
+    <app-emergency />
+    <app-impact />
+    <app-how-it-works />
+    <app-final-cta />
+  </main>
+
+  <app-site-footer />
+</div>

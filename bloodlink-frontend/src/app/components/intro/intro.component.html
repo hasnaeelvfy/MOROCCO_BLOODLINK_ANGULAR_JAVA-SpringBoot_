@@ -1,0 +1,17 @@
+<div
+  class="intro"
+  [class.intro--exiting]="exiting()"
+  [class.intro--finished]="finished()"
+  role="presentation"
+  [attr.aria-label]="'intro.aria' | t"
+  (pointerdown)="unlockAudio()"
+>
+  <canvas #stage class="intro__stage" aria-hidden="true"></canvas>
+  <div class="intro__vignette" aria-hidden="true"></div>
+  <div class="intro__bloom" aria-hidden="true"></div>
+
+  <button class="intro__control intro__control--sound" type="button" (click)="toggleSound()">
+    {{ soundOn() ? ('intro.soundOn' | t) : ('intro.enableSound' | t) }}
+  </button>
+  <button class="intro__control intro__control--skip" type="button" (click)="skip()">{{ 'intro.skip' | t }}</button>
+</div>

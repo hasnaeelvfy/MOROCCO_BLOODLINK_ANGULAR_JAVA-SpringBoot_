@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+}
+
+.shell__body,
+.shell app-site-footer,
+.shell app-site-nav {
+  display: block;
+  opacity: 1;
+}

@@ -1,0 +1,49 @@
+<section class="hero">
+  <canvas #stage class="hero__stage" aria-hidden="true"></canvas>
+  <div #orbit class="hero__orbit" aria-hidden="true"></div>
+  <div class="hero__scrim" aria-hidden="true"></div>
+  <div class="hero__depth" aria-hidden="true"></div>
+
+  <div class="hero__layout">
+    <div class="hero__content">
+      <p class="hero__eyebrow reveal">{{ 'hero.eyebrow' | t }}</p>
+
+      <h1 class="hero__title reveal">
+        {{ 'hero.title.one' | t }}<br />
+        {{ 'hero.title.two' | t }}<br />
+        <span class="hero__title-accent">{{ 'hero.title.accent' | t }}</span>
+      </h1>
+
+      <p class="hero__lead reveal">
+        {{ 'hero.lead' | t }}
+      </p>
+
+      <div class="hero__actions reveal">
+        <a class="button magnetic" routerLink="/donor/auth">{{ 'cta.becomeDonor' | t }} <span aria-hidden="true">↗</span></a>
+        <a class="button button--ghost" routerLink="/hospital/auth">{{ 'cta.findBloodSupport' | t }} <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <dl class="hero__telemetry reveal">
+        <div>
+          <dt>{{ 'hero.telemetry.response' | t }}</dt>
+          <dd>{{ 'hero.telemetry.cascade' | t }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'hero.telemetry.coverage' | t }}</dt>
+          <dd>{{ 'hero.telemetry.national' | t }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'hero.telemetry.compatibility' | t }}</dt>
+          <dd>{{ 'hero.telemetry.paths' | t }}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <p class="hero__badge" aria-hidden="true">
+    <b>{{ 'hero.badge.live' | t }}</b>
+    {{ 'hero.badge.layer' | t }}
+  </p>
+
+  <p class="hero__hint" aria-hidden="true"><i></i> {{ 'hero.hint.orbit' | t }}</p>
+</section>

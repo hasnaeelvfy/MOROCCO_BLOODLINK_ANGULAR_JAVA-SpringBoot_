@@ -1,0 +1,56 @@
+<header class="nav-wrap">
+  <nav class="nav">
+    <a class="logo" routerLink="/" [attr.aria-label]="'nav.home' | t">
+      <app-brand-mark />
+      <span>Blood<em>Link</em></span>
+    </a>
+    <div class="nav-links">
+      @if (home()) {
+        <a href="#emergency">{{ 'nav.emergency' | t }}</a>
+        <a href="#coverage">{{ 'nav.coverage' | t }}</a>
+        <a href="#how">{{ 'nav.how' | t }}</a>
+        <a href="#network">{{ 'nav.network' | t }}</a>
+        <a href="#about">{{ 'nav.about' | t }}</a>
+      } @else if (session()?.role === 'donor') {
+        <a routerLink="/donor">{{ 'nav.dashboard' | t }}</a>
+        <a routerLink="/donor/invitations">{{ 'nav.invitations' | t }}</a>
+        <a routerLink="/donor/notifications">{{ 'nav.notifications' | t }}</a>
+        <a routerLink="/donor/history">{{ 'nav.history' | t }}</a>
+      } @else if (session()?.role === 'hospital') {
+        <a routerLink="/hospital">{{ 'nav.dashboard' | t }}</a>
+        <a routerLink="/hospital/requests">{{ 'nav.requests' | t }}</a>
+        <a routerLink="/hospital/notifications">{{ 'nav.notifications' | t }}</a>
+        <a routerLink="/hospital/profile">{{ 'nav.profile' | t }}</a>
+      } @else if (session()?.role === 'admin') {
+        <a routerLink="/admin">{{ 'nav.dashboard' | t }}</a>
+        <a routerLink="/admin/hospitals">{{ 'nav.hospitals' | t }}</a>
+        <a routerLink="/admin/requests">{{ 'nav.requests' | t }}</a>
+        <a routerLink="/admin/audit-log">{{ 'nav.audit' | t }}</a>
+      } @else {
+        <a routerLink="/about">{{ 'nav.how' | t }}</a>
+        <a routerLink="/safety">{{ 'nav.safety' | t }}</a>
+        <a routerLink="/privacy">{{ 'nav.privacy' | t }}</a>
+        <a routerLink="/contact">{{ 'nav.contact' | t }}</a>
+      }
+      @if (session()) {
+        <a class="nav-mobile-auth" [routerLink]="auth.homePath()">{{ 'nav.dashboard' | t }}</a>
+        <a class="nav-mobile-auth" routerLink="/notifications">{{ 'nav.notifications' | t }}</a>
+        <a class="nav-mobile-auth nav-mobile-auth--cta" href="#" (click)="signOut($event)">{{ 'nav.signOut' | t }}</a>
+      } @else {
+        <a class="nav-mobile-auth" routerLink="/donor/auth">{{ 'nav.becomeDonor' | t }}</a>
+        <a class="nav-mobile-auth nav-mobile-auth--cta" routerLink="/hospital/auth">{{ 'nav.findBloodSupport' | t }}</a>
+      }
+    </div>
+    <div class="nav-actions">
+      <app-language-switcher />
+      @if (session()) {
+        <a class="nav-sign" href="#" (click)="signOut($event)">{{ 'nav.signOut' | t }}</a>
+        <a class="nav-cta" [routerLink]="auth.homePath()">{{ 'nav.dashboard' | t }}</a>
+      } @else {
+        <a class="nav-sign" routerLink="/donor/auth">{{ 'nav.signIn' | t }}</a>
+        <a class="nav-cta" routerLink="/donor/auth">{{ 'nav.becomeDonor' | t }}</a>
+      }
+      <button class="menu" type="button" [attr.aria-label]="'nav.aria.openMenu' | t" aria-expanded="false">☰</button>
+    </div>
+  </nav>
+</header>

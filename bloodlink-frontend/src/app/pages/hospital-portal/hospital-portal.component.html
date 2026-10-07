@@ -1,0 +1,45 @@
+<div class="hp">
+  <aside class="hp-sidebar" [class.hp-sidebar--open]="menuOpen">
+    <a class="hp-brand" routerLink="/hospital">
+      <app-brand-mark />
+      <span>Blood<em>Link</em></span>
+    </a>
+    <p class="hp-workspace">{{ 'portal.hospital.title' | t }}</p>
+    <nav class="hp-nav">
+      <a routerLink="/hospital" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">{{ 'nav.dashboard' | t }}</a>
+      <a routerLink="/hospital/requests" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">{{ 'portal.hospital.bloodRequests' | t }}</a>
+      <a routerLink="/hospital/requests/new" routerLinkActive="is-active">{{ 'portal.hospital.createRequest' | t }}</a>
+      <a routerLink="/hospital/matches" routerLinkActive="is-active">{{ 'portal.hospital.donorsMatches' | t }}</a>
+      <a routerLink="/hospital/notifications" routerLinkActive="is-active">
+        {{ 'nav.notifications' | t }}
+        @if (hospitalApi.unread()) {
+          <span class="hp-count">{{ hospitalApi.unread() }}</span>
+        }
+      </a>
+      <a routerLink="/hospital/messages" routerLinkActive="is-active">{{ 'portal.hospital.messages' | t }}</a>
+      <a routerLink="/hospital/profile" routerLinkActive="is-active">{{ 'portal.hospital.hospitalProfile' | t }}</a>
+      <a routerLink="/hospital/settings" routerLinkActive="is-active">{{ 'portal.hospital.settings' | t }}</a>
+    </nav>
+    <button class="hp-logout" type="button" (click)="signOut()">{{ 'auth.logout' | t }}</button>
+  </aside>
+
+  @if (menuOpen) {
+    <button class="hp-backdrop" type="button" [attr.aria-label]="'nav.aria.closeMenu' | t" (click)="menuOpen = false"></button>
+  }
+
+  <div class="hp-main">
+    <header class="hp-top">
+      <button class="hp-menu" type="button" (click)="menuOpen = !menuOpen" [attr.aria-expanded]="menuOpen">{{ 'nav.menu' | t }}</button>
+      <div class="hp-hospital">
+        <strong>{{ hospitalApi.profile()?.name || apiAuth.currentUser()?.email || ('portal.hospital.workspace' | t) }}</strong>
+        <span class="hp-verify">{{ hospitalApi.profile()?.verification === 'verified' ? ('verification.verified' | t) : ('portal.hospital.verificationPending' | t) }}</span>
+      </div>
+      <div class="hp-top-actions">
+        <app-language-switcher />
+        <a class="hp-bell" routerLink="/hospital/notifications" [attr.data-count]="hospitalApi.unread()">{{ 'nav.notifications' | t }}</a>
+        <a class="hp-top-link" routerLink="/hospital/profile">{{ 'nav.profile' | t }}</a>
+      </div>
+    </header>
+    <router-outlet />
+  </div>
+</div>

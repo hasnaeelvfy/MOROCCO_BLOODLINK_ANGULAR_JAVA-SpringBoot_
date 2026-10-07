@@ -1,0 +1,45 @@
+<div class="hp">
+  <aside class="hp-sidebar" [class.hp-sidebar--open]="menuOpen">
+    <a class="hp-brand" routerLink="/donor">
+      <app-brand-mark />
+      <span>Blood<em>Link</em></span>
+    </a>
+    <p class="hp-workspace">{{ 'portal.donor.title' | t }}</p>
+    <nav class="hp-nav">
+      <a routerLink="/donor" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">{{ 'nav.dashboard' | t }}</a>
+      <a routerLink="/donor/invitations" routerLinkActive="is-active">{{ 'nav.invitations' | t }}</a>
+      <a routerLink="/donor/history" routerLinkActive="is-active">{{ 'nav.history' | t }}</a>
+      <a routerLink="/donor/eligibility" routerLinkActive="is-active">{{ 'portal.donor.screening' | t }}</a>
+      <a routerLink="/donor/notifications" routerLinkActive="is-active">
+        {{ 'nav.notifications' | t }}
+        @if (donorApi.unread()) {
+          <span class="hp-count">{{ donorApi.unread() }}</span>
+        }
+      </a>
+      <a routerLink="/donor/profile" routerLinkActive="is-active">{{ 'nav.profile' | t }}</a>
+      <a routerLink="/donor/availability" routerLinkActive="is-active">{{ 'availability' | t }}</a>
+      <a routerLink="/donor/settings" routerLinkActive="is-active">{{ 'portal.hospital.settings' | t }}</a>
+    </nav>
+    <button class="hp-logout" type="button" (click)="signOut()">{{ 'auth.logout' | t }}</button>
+  </aside>
+
+  @if (menuOpen) {
+    <button class="hp-backdrop" type="button" [attr.aria-label]="'nav.aria.closeMenu' | t" (click)="menuOpen = false"></button>
+  }
+
+  <div class="hp-main">
+    <header class="hp-top">
+      <button class="hp-menu" type="button" (click)="menuOpen = !menuOpen" [attr.aria-expanded]="menuOpen">{{ 'nav.menu' | t }}</button>
+      <div class="hp-hospital">
+        <strong>{{ firstName() }}</strong>
+        <span class="hp-verify">{{ donorApi.profile()?.available ? ('portal.donor.availableForRequests' | t) : ('availability.unavailable' | t) }}</span>
+      </div>
+      <div class="hp-top-actions">
+        <app-language-switcher />
+        <a class="hp-bell" routerLink="/donor/notifications" [attr.data-count]="donorApi.unread()">{{ 'nav.notifications' | t }}</a>
+        <a class="hp-top-link" routerLink="/donor/profile">{{ 'nav.profile' | t }}</a>
+      </div>
+    </header>
+    <router-outlet />
+  </div>
+</div>

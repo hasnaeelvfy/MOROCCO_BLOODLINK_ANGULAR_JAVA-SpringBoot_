@@ -1,0 +1,33 @@
+<section class="section" id="emergency">
+  <div class="cascade">
+    <div class="reveal">
+      <div class="eyebrow">{{ 'emergency.eyebrow' | t }}</div>
+      <h2>{{ 'emergency.headline' | t }}<br><span class="accent">{{ 'emergency.headlineAccent' | t }}</span></h2>
+      <p class="lead">{{ 'emergency.intro' | t }}</p>
+      <div class="cascade-steps">
+        <div class="cascade-step"><b>{{ 'emergency.step.urgent.title' | t }}</b>{{ 'emergency.step.urgent.body' | t }}</div>
+        <div class="cascade-step"><b>{{ 'emergency.step.nearest.title' | t }}</b>{{ 'emergency.step.nearest.body' | t }}</div>
+        <div class="cascade-step"><b>{{ 'emergency.step.expand.title' | t }}</b>{{ 'emergency.step.expand.body' | t }}</div>
+        <div class="cascade-step"><b>{{ 'emergency.step.regional.title' | t }}</b>{{ 'emergency.step.regional.body' | t }}</div>
+        <div class="cascade-step"><b>{{ 'emergency.step.confirmed.title' | t }}</b>{{ 'emergency.step.confirmed.body' | t }}</div>
+      </div>
+    </div>
+    <div class="glass request reveal">
+      @if (feed.featured(); as item) {
+        <span class="demo-pill">{{ item.urgency === 'STANDARD' ? ('urgency.activeRequest' | t) : ('urgency.namedRequest' | t:{ urgency: i18n.enumLabel('urgency', item.urgency) }) }}</span>
+        <h3>{{ 'emergency.searching' | t }}</h3>
+        <dl>
+          <div><dt>{{ 'emergency.bloodType' | t }}</dt><dd>{{ item.bloodType }}</dd></div>
+          <div><dt>{{ 'emergency.unitsNeeded' | t }}</dt><dd>{{ pad(item.units) }}</dd></div>
+          <div><dt>{{ 'emergency.location' | t }}</dt><dd>{{ item.city }}</dd></div>
+          <div><dt>{{ 'emergency.requestId' | t }}</dt><dd style="color:#9e858b">{{ item.publicCode }}</dd></div>
+          <div class="status"><dt>{{ 'emergency.status' | t }}</dt><dd>{{ i18n.requestDisplay(item.displayStatus) }}</dd></div>
+        </dl>
+      } @else {
+        <span class="demo-pill">{{ 'emergency.liveRequests' | t }}</span>
+        <h3>{{ 'emergency.empty' | t }}</h3>
+        <p class="lead" style="margin:12px 0 0">{{ 'emergency.emptyHintLive' | t }}</p>
+      }
+    </div>
+  </div>
+</section>

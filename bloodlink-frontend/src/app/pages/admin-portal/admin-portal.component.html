@@ -1,0 +1,38 @@
+<div class="hp">
+  <aside class="hp-sidebar" [class.hp-sidebar--open]="menuOpen">
+    <a class="hp-brand" routerLink="/admin">
+      <app-brand-mark />
+      <span>Blood<em>Link</em></span>
+    </a>
+    <p class="hp-workspace">{{ 'portal.admin.title' | t }}</p>
+    <nav class="hp-nav">
+      <a routerLink="/admin" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">{{ 'nav.dashboard' | t }}</a>
+      <a routerLink="/admin/hospitals" routerLinkActive="is-active">{{ 'nav.hospitals' | t }}</a>
+      <a routerLink="/admin/donors" routerLinkActive="is-active">{{ 'nav.donors' | t }}</a>
+      <a routerLink="/admin/users" routerLinkActive="is-active">{{ 'nav.users' | t }}</a>
+      <a routerLink="/admin/requests" routerLinkActive="is-active">{{ 'nav.requests' | t }}</a>
+      <a routerLink="/admin/matches" routerLinkActive="is-active">{{ 'nav.matches' | t }}</a>
+      <a routerLink="/admin/donations" routerLinkActive="is-active">{{ 'nav.donations' | t }}</a>
+      <a routerLink="/admin/audit-log" routerLinkActive="is-active">{{ 'nav.audit' | t }}</a>
+    </nav>
+    <button class="hp-logout" type="button" (click)="signOut()">{{ 'auth.logout' | t }}</button>
+  </aside>
+
+  @if (menuOpen) {
+    <button class="hp-backdrop" type="button" [attr.aria-label]="'nav.aria.closeMenu' | t" (click)="menuOpen = false"></button>
+  }
+
+  <div class="hp-main">
+    <header class="hp-top">
+      <button class="hp-menu" type="button" (click)="menuOpen = !menuOpen" [attr.aria-expanded]="menuOpen">{{ 'nav.menu' | t }}</button>
+      <div class="hp-hospital">
+        <strong>{{ displayName() }}</strong>
+        <span class="hp-verify">{{ 'portal.admin.signedIn' | t }}</span>
+      </div>
+      <div class="hp-top-actions">
+        <app-language-switcher />
+      </div>
+    </header>
+    <router-outlet />
+  </div>
+</div>

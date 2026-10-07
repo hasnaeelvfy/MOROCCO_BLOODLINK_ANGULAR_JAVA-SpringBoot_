@@ -1,0 +1,22 @@
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Environment secrets (never commit)
+.env
+.env.local
+.env.*.local
+
+# Backend build & runtime uploads
+bloodlink_backend/bloodlink_backend/target/
+bloodlink_backend/bloodlink_backend/uploads/
+
+# Frontend build & tooling cache
+bloodlink-frontend/dist/
+bloodlink-frontend/node_modules/
+bloodlink-frontend/.angular/
+bloodlink-frontend/out-tsc/
+bloodlink-frontend/coverage/
